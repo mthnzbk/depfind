@@ -38,7 +38,7 @@ for package in package_list:
 			# ilk liste ögesi(li[0]) paket adı, ikincisi de(li[-1]) liste halinde aranan kelimenin geçtiği dosyalar.
 			for l in li[-1]:
 				# dosyaların uzantısı *.cmake olanları ayıklayıp çıktı veriyoruz.
-				if l.endswith("cmake"):
+				if l.startswith("/usr/lib/cmake/%s"%package) and l.endswith("cmake"):
 					print package, "-", li[0], "-", l
 					counter += 1 # sayaç ile cmake dosyalarının varlığı tespit ediliyor.
 		# sayaç artmamışsa demekki cmake dosyası yoktur ve bunun bilgisi çıktıya yansır.
