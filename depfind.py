@@ -5,13 +5,12 @@ from pisi.db.filesdb import FilesDB
 import sys
 import re
 
-dep_tag = "<Dependency>{}</<Dependency>"
+dep_tag = "<Dependency>%s</<Dependency>"
 
 cmake_file = sys.argv[1]
 
 
 package_list = []
-# find_package(Qt5 $
 
 with open(cmake_file) as file_cmake:
 	# dosya satır satır okunuyor ve istenilen veriler ayıklanıyor.
@@ -27,7 +26,7 @@ files_db = FilesDB()
 print package_list # Aranacak verileri yazdırıyoruz.
 
 counter = 0
-
+packages = []
 for package in package_list:
 	liste = files_db.search_file(package)
 
@@ -38,9 +37,10 @@ for package in package_list:
 			# ilk liste ögesi(li[0]) paket adı, ikincisi de(li[-1]) liste halinde aranan kelimenin geçtiği dosyalar.
 			for l in li[-1]:
 				# dosyaların uzantısı *.cmake olanları ayıklayıp çıktı veriyoruz.
-				if l.startswith("/usr/lib/cmake/%s"%package) and l.endswith("cmake"):
+				if l.startswith("usr/lib/cmake/%s/"%package) and l.endswith("cmake"):
 					print package, "-", li[0], "-", l
 					counter += 1 # sayaç ile cmake dosyalarının varlığı tespit ediliyor.
+					packages.append(li[0])
 		# sayaç artmamışsa demekki cmake dosyası yoktur ve bunun bilgisi çıktıya yansır.
 		if not counter:
 			print package, "-", u"Bulunamadı"
@@ -51,4 +51,9 @@ for package in package_list:
 	# liste boş ise aranan veriye sahip paket kurulu değildir.
 	else:
 		print package, "-", u"Bulunamadı"
-			
+
+
+print set(packages)
+
+for package in set(packages):
+	print dep_tag%package
