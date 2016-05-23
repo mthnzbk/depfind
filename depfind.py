@@ -15,11 +15,17 @@ package_list = []
 with open(cmake_file) as file_cmake:
 	# dosya satır satır okunuyor ve istenilen veriler ayıklanıyor.
 	for line in file_cmake.readlines():
-		compile = re.compile(r"^find_package\((.*) \$")
+		compile = re.compile(r"^find_package\((.*) +[0-9][A-Z]\)")
 		obje = compile.search(line)
 		if obje:
 			# istenilen veri varsa listeye ekliyoruz.
-			package_list.append(obje.groups()[0])
+			package_list.append(obje.groups()[0].split(" ")[0])
+
+		compile = re.compile(r"^find_package\((.*)\)\n")
+		obje = compile.search(line)
+		if obje:
+			# istenilen veri varsa listeye ekliyoruz.
+			package_list.append(obje.groups()[0].split(" ")[0])
 
 files_db = FilesDB()
 
