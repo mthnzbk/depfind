@@ -43,7 +43,7 @@ for package in package_list:
         for li in liste:
             for l in li[-1]:
                 # dosyaların uzantısı *.cmake olanları ayıklayıp çıktı veriyoruz.
-                if l.startswith("usr/lib/cmake/%s/" % package) and l.endswith("cmake"):
+                if (l.startswith("usr/share/%s/" % package) or l.startswith("usr/lib/cmake/%s/" % package)) and l.endswith("cmake"):
                     print package, "-", li[0], "-", l
                     counter += 1  # sayaç ile cmake dosyalarının varlığı tespit ediliyor.
                     packages.append(li[0])
