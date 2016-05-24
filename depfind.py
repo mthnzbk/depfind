@@ -5,7 +5,7 @@ from pisi.db.filesdb import FilesDB
 import sys
 import re
 
-dep_tag = "<Dependency>%s</<Dependency>"
+dep_tag = "<Dependency>%s</Dependency>"
 
 cmake_file = sys.argv[1]
 
