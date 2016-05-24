@@ -49,13 +49,13 @@ for package in package_list:
                     packages.append(li[0])
 
                 if not counter:
-                    print package, "-", u"Bulunamadı"
+                    pass #print package, "-", u"Bulunamadı"
 
                 else:
                     counter = 0
 
     else:
-        print package, "-", u"Bulunamadı"
+        pass #print package, "-", u"Bulunamadı"
 
 for package in set(packages):
     print dep_tag % package
